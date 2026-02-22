@@ -620,11 +620,13 @@ const App: React.FC = () => {
       };
       setProjects([newProject, ...projects]);
     } catch (err: any) {
-      console.error(err);
+      console.error("Full Error Object:", err);
       if (err.message === "MISSING_API_KEY") {
-        alert("API Key is missing. Please configure GEMINI_API_KEY in your deployment settings (e.g., Coolify, Vercel, or .env file).");
+        alert("API Key is missing. Please configure GEMINI_API_KEY in your deployment settings.");
       } else {
-        alert("Generation failed. Please try again.");
+        // Show the actual error message to the user for debugging
+        const errorMessage = err.message || err.toString() || "Unknown error";
+        alert(`Generation failed: ${errorMessage}\n\nCheck console for more details.`);
       }
     } finally {
       setIsGenerating(false);
