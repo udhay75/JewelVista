@@ -623,6 +623,8 @@ const App: React.FC = () => {
       console.error("Full Error Object:", err);
       if (err.message === "MISSING_API_KEY") {
         alert("API Key is missing. Please configure GEMINI_API_KEY in your deployment settings.");
+      } else if (err.status === 429 || err.message?.includes('429') || err.message?.includes('quota') || err.message?.includes('RESOURCE_EXHAUSTED')) {
+        alert("Quota Exceeded: You have hit the rate limit for the Gemini API Free Tier.\n\nPlease wait a minute before trying again, or upgrade to a paid plan.");
       } else {
         // Show the actual error message to the user for debugging
         const errorMessage = err.message || err.toString() || "Unknown error";
