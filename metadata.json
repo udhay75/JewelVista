@@ -1,0 +1,7 @@
+{
+  "name": "JewelVista AI",
+  "description": "Premium AI-powered jewellery try-on platform for high-converting digital commerce visuals.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
