@@ -6,7 +6,12 @@ export const generateJewelleryTryOn = async (
   imageBase64: string,
   config: GenerationConfig
 ): Promise<string[]> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    console.error("API Key is missing. Please check your environment variables.");
+    throw new Error("MISSING_API_KEY");
+  }
+  const ai = new GoogleGenAI({ apiKey });
   const modelName = 'gemini-2.5-flash-image';
 
   const typesStr = config.jewelleryTypes.join(' and ');
@@ -87,7 +92,11 @@ export const generateJewelleryVideo = async (
   onProgress: (msg: string) => void
 ): Promise<string> => {
   // Create a new instance right before the call to ensure the latest API key is used
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error("MISSING_API_KEY");
+  }
+  const ai = new GoogleGenAI({ apiKey });
   
   onProgress("Initializing cinematic rendering engine...");
   

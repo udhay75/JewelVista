@@ -619,9 +619,13 @@ const App: React.FC = () => {
         createdAt: Date.now(),
       };
       setProjects([newProject, ...projects]);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      alert("Generation failed. Please try again.");
+      if (err.message === "MISSING_API_KEY") {
+        alert("API Key is missing. Please configure GEMINI_API_KEY in your deployment settings (e.g., Coolify, Vercel, or .env file).");
+      } else {
+        alert("Generation failed. Please try again.");
+      }
     } finally {
       setIsGenerating(false);
     }
